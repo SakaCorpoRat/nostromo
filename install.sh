@@ -10,7 +10,7 @@ echo "Installing packages..."
 
 sudo apt update && sudo apt install -y \
   i3 kitty conky polybar neofetch feh \
-  mpv xlockmore-gl fonts-terminus dmenu
+  fonts-terminus dmenu
 
 echo "[ Creating user config directories... ]"
 mkdir -p ~/.config/{i3,kitty,polybar,conky,neofetch} ~/.local/bin
