@@ -2,31 +2,34 @@
 
 set -e
 
-echo ">> Cassette Futurism Linux Setup"
-echo ">> Installing dependencies..."
+echo "[ Cassette Linux Setup ]"
+echo "Installing dependencies..."
 
 sudo apt update && sudo apt install -y \
   i3 kitty conky polybar neofetch feh \
-  pulseaudio alsa-utils \
-  fonts-terminus \
-  x11-xserver-utils \
+  fonts-terminus dmenu
 
-# If using TTF Terminus instead of bitmap:
-# sudo apt install xfonts-terminus
+mkdir -p ~/.config/{i3,kitty,polybar,conky,neofetch} ~/.local/bin
 
-echo ">> Copying dotfiles..."
+backup_and_copy() {
+  local src=$1
+  local dest=$2
+  if [ -f "$dest" ]; then
+    mv "$dest" "$dest.backup.$(date +%s)"
+    echo "[ Backed up: $dest ]"
+  fi
+  cp "$src" "$dest"
+}
 
-mkdir -p ~/.config/i3 ~/.config/kitty ~/.config/polybar ~/.config/conky ~/.config/neofetch
+echo "Copying dotfiles..."
+backup_and_copy i3/config ~/.config/i3/config
+backup_and_copy kitty/kitty.conf ~/.config/kitty/kitty.conf
+backup_and_copy polybar/config.ini ~/.config/polybar/config.ini
+backup_and_copy conky/conky.conf ~/.config/conky/conky.conf
+backup_and_copy neofetch/config.conf ~/.config/neofetch/config.conf
 
-cp -r i3/config ~/.config/i3/
-cp -r kitty/kitty.conf ~/.config/kitty/
-cp -r polybar/config ~/.config/polybar/
-cp -r conky/conky.conf ~/.config/conky/
-cp -r neofetch/config.conf ~/.config/neofetch/
-
-echo ">> Installing custom scripts..."
-mkdir -p ~/.local/bin
 cp -r scripts/* ~/.local/bin/
 chmod +x ~/.local/bin/*
 
-echo ">> Setup complete. Enjoy the amber glow."
+echo "[ Done ] Welcome to the retrofuture."
+echo "You can launch your session and tweak from ~/.config/i3/config."
