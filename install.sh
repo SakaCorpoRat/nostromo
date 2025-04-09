@@ -3,9 +3,8 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-USER_HOME="/home/deckard"
-CONFIG_DIR="$USER_HOME/.config"
-BIN_DIR="$USER_HOME/.local/bin"
+CONFIG_DIR="/home/deckard/.config"
+BIN_DIR="/home/deckard/.local/bin"
 
 echo "[ Cassette Linux Setup ]"
 echo "Installing packages..."
@@ -43,4 +42,4 @@ echo "[ Installing scripts... ]"
 cp -r "$SCRIPT_DIR/scripts/"* "$BIN_DIR/"
 chmod +x "$BIN_DIR/"*
 
-echo "[ Done ] System installed to /home/deckard/.config."
+echo "[ Done ] Configuration installed to /home/deckard/.config and /home/deckard/.local/bin."
