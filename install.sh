@@ -10,7 +10,6 @@ sudo apt update && sudo apt install -y \
   pulseaudio alsa-utils \
   fonts-terminus \
   x11-xserver-utils \
-  mpv xlockmore
 
 # If using TTF Terminus instead of bitmap:
 # sudo apt install xfonts-terminus
