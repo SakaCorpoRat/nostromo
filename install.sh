@@ -2,39 +2,45 @@
 
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+USER_HOME="/home/deckard"
+CONFIG_DIR="$USER_HOME/.config"
+BIN_DIR="$USER_HOME/.local/bin"
+
 echo "[ Cassette Linux Setup ]"
-echo "Installing required packages..."
+echo "Installing packages..."
 
 sudo apt update && sudo apt install -y \
   i3 kitty conky polybar neofetch feh \
-  fonts-terminus dmenu
+  mpv xlockmore-gl fonts-terminus dmenu
 
-echo "[ Creating user config directories... ]"
-mkdir -p ~/.config/{i3,kitty,polybar,conky,neofetch} ~/.local/bin
+echo "[ Creating config directories... ]"
+mkdir -p "$CONFIG_DIR"/{i3,kitty,polybar,conky,neofetch} "$BIN_DIR"
 
-# Backup and install config file
-install_config() {
-  local dest="$HOME/.config/$1"
-  local content="$2"
-
+backup_and_copy() {
+  local src="$1"
+  local dest="$2"
+  if [ ! -f "$src" ]; then
+    echo "ERROR: Source file not found: $src"
+    exit 1
+  fi
   if [ -f "$dest" ]; then
     mv "$dest" "$dest.backup.$(date +%s)"
-    echo "[ Backed up: $dest ]"
+    echo "[ Backed up $dest ]"
   fi
-
-  echo "$content" > "$dest"
+  cp "$src" "$dest"
   echo "[ Installed: $dest ]"
 }
 
-# Example: Replace these variables with your actual config content (or load them from /etc/skel)
-install_config "i3/config" "$(cat /etc/skel/.config/i3/config)"
-install_config "kitty/kitty.conf" "$(cat /etc/skel/.config/kitty/kitty.conf)"
-install_config "polybar/config.ini" "$(cat /etc/skel/.config/polybar/config.ini)"
-install_config "conky/conky.conf" "$(cat /etc/skel/.config/conky/conky.conf)"
-install_config "neofetch/config.conf" "$(cat /etc/skel/.config/neofetch/config.conf)"
+echo "[ Copying configs... ]"
+backup_and_copy "$SCRIPT_DIR/i3/config" "$CONFIG_DIR/i3/config"
+backup_and_copy "$SCRIPT_DIR/kitty/kitty.conf" "$CONFIG_DIR/kitty/kitty.conf"
+backup_and_copy "$SCRIPT_DIR/polybar/config.ini" "$CONFIG_DIR/polybar/config.ini"
+backup_and_copy "$SCRIPT_DIR/conky/conky.conf" "$CONFIG_DIR/conky/conky.conf"
+backup_and_copy "$SCRIPT_DIR/neofetch/config.conf" "$CONFIG_DIR/neofetch/config.conf"
 
-echo "[ Copying user scripts... ]"
-cp -r /etc/skel/.local/bin/* ~/.local/bin/
-chmod +x ~/.local/bin/*
+echo "[ Installing scripts... ]"
+cp -r "$SCRIPT_DIR/scripts/"* "$BIN_DIR/"
+chmod +x "$BIN_DIR/"*
 
-echo "[ Done ] Welcome to the retrofuture!"
+echo "[ Done ] System installed to /home/deckard/.config."
