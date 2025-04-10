@@ -20,6 +20,49 @@ cat > "$CONFIG_DIR/i3/config" << 'EOF'
 set $mod Mod4
 font pango:Terminus 12
 
+# class                 border  bground text    indicator child_border
+client.focused          #FFAA00 #FFAA00 #FFFFFF #FFAA00   #FFAA00
+client.focused_inactive #FFAA00 #888888 #FFFFFF #222222   #222222
+client.unfocused        #FFAA00 #000000 #FFFFFF #111111   #111111
+client.urgent           #FF0000 #330000 #FFFFFF #AC0000   #AC0000
+client.placeholder      #000000 #000000 #FFFFFF #000000   #000000
+
+client.background       #000000
+
+bar {
+  colors {
+    background #000000
+    statusline #FFFFFF
+    separator  #FFAA00
+
+    focused_workspace  #FFAA00 #FFAA00 #FFFFFF
+    active_workspace   #FFAA00 #888888 #FFFFFF
+    inactive_workspace #FFAA00 #000000 #FFFFFF
+    urgent_workspace   #FF0000 #AC0000 #FFFFFF
+    binding_mode       #FF0000 #AC0000 #FFFFFF
+  }
+}
+
+bindsym $mod+d exec "dmenu_run -nf '#FFAA00' -nb '#000000' -sb '#FFAA00' -sf '#000000' -fn 'terminus-11' -p 'dmenu prompt &gt;'"
+
+general {
+  output_format = "i3bar"
+  colors = true
+  color_good = "#00D900"
+  color_degraded = "#FFEB00"
+  color_bad = "#FF0000"
+}
+
+# Gaps and window settings
+gaps inner 10
+gaps outer 10
+smart_gaps on
+
+default_border pixel 2
+default_floating_border pixel 2
+new_window pixel 2
+new_float pixel 2
+
 # Keybindings
 bindsym $mod+Return exec kitty
 bindsym $mod+d exec dmenu_run
@@ -34,20 +77,9 @@ bindsym $mod+k focus up
 bindsym $mod+l focus right
 
 # Autostart
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id conky
-exec --no-startup-id $HOME/.local/bin/boot-sound.sh
-
-# Appearance
-gaps inner 10
-gaps outer 10
-smart_gaps on
-default_border pixel 2
-new_window pixel 2
-
-client.focused          #ffbf00 #ffbf00 #ffffff #ffbf00 #ffbf00
-client.unfocused        #1a1a1a #1a1a1a #ffffff #1a1a1a #1a1a1a
-client.urgent           #ff0000 #ff0000 #ffffff #ff0000 #ff0000
+exec --no-startup-id ~/.local/bin/boot-sound.sh
 EOF
 
 # Write kitty config
