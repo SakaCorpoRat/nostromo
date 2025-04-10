@@ -118,7 +118,11 @@ conky.config = {
     alignment = 'top_right',
     background = true,
     double_buffer = true,
+    draw_shades = false,
     update_interval = 1.0,
+    total_run_times = 0,
+    net_avg_samples = 2,
+    override_utf8_locale = true,
     use_xft = true,
     font = 'Terminus:size=12',
     own_window = true,
@@ -129,7 +133,7 @@ conky.config = {
     default_color = '#ffffff',
     color1 = '#ffbf00',
     color2 = '#ff0000'
-};
+}
 
 conky.text = [[
 ${color1}SYSTEM ${hr 2}
