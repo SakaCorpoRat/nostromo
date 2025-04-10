@@ -85,10 +85,18 @@ EOF
 # Write kitty config
 cat > "$CONFIG_DIR/kitty/kitty.conf" << 'EOF'
 font_family Terminus
+bold_font Terminus Bold
+italic_font Terminus Italic
 font_size 12
+
 foreground #ffffff
 background #000000
+selection_foreground #000000
+selection_background #ffbf00
+
 cursor #ffbf00
+url_color #00ff00
+
 color0  #000000
 color1  #ff0000
 color2  #00ff00
